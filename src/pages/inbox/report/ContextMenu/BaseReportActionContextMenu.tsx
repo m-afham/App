@@ -83,9 +83,6 @@ type BaseReportActionContextMenuProps = {
     /** Target node which is the target of ContentMenu */
     anchor?: RefObject<ContextMenuAnchor>;
 
-    /** Flag to check if the chat participant is Chronos */
-    isChronosReport?: boolean;
-
     /** Whether the provided report is an archived room */
     isArchivedRoom?: boolean;
 
@@ -118,7 +115,6 @@ function BaseReportActionContextMenu({
     type = CONST.CONTEXT_MENU_TYPES.REPORT_ACTION,
     anchor,
     contentRef,
-    isChronosReport = false,
     isArchivedRoom = false,
     isMini = false,
     isVisible = false,
@@ -261,6 +257,7 @@ function BaseReportActionContextMenu({
         isMoneyRequestOrReport &&
         !isArchivedNonExpenseReport(transactionThreadReportID ? childReport : parentReport, transactionThreadReportID ? isChildReportArchived : isParentReportArchived);
 
+    const isChronosReport = chatIncludesChronosWithID(originalReportID);
     const shouldEnableArrowNavigation = !isMini && (isVisible || shouldKeepOpen);
     const isHarvestReport = isHarvestCreatedExpenseReport(reportNameValuePairs?.origin, reportNameValuePairs?.originalID);
 
@@ -347,7 +344,6 @@ function BaseReportActionContextMenu({
                 reportID,
                 originalReportID,
                 isArchivedRoom: isArchivedNonExpenseReport(originalReport, isOriginalReportArchived),
-                isChronos: chatIncludesChronosWithID(originalReportID),
             },
             reportAction: {
                 reportActionID: reportAction?.reportActionID,
